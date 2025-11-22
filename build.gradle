@@ -1,5 +1,23 @@
 plugins {
-    id 'java-library'
+    id 'java'
+    id 'io.qameta.allure' version '2.10.0'
+}
+
+group = 'kozherka.ru'
+version = '1.0-SNAPSHOT'
+
+allure {
+    report {
+        version.set("2.19.0")
+    }
+    adapter { // отвечает за появление папочки build/allure-results
+        aspectjWeaver.set(true) //обработка аннотации @Step
+        frameworks {
+            junit5 { //название фреймворка
+                adapterVersion.set("2.19.0") //версия интеграции фреймворка и Allure
+            }
+        }
+    }
 }
 
 repositories {
@@ -8,12 +26,27 @@ repositories {
 
 dependencies {
     testImplementation(
-            "com.codeborne:selenide:7.9.3",
-            "org.junit.jupiter:junit-jupiter:5.10.0",
-            'org.slf4j:slf4j-simple:2.0.7'
+            'org.junit.jupiter:junit-jupiter-api:5.9.0',
+            'com.codeborne:selenide:6.19.1',
+            'io.qameta.allure:allure-selenide:2.19.0',
+            'org.aspectj:aspectjweaver:1.9.20'
     )
+
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.9.0')
 }
 
-test {
+tasks.withType(Test).configureEach {
     useJUnitPlatform()
+
+    testLogging {
+        events "started", "skipped", "failed", "standard_out", "standard_error"
+        exceptionFormat "short"
+    }
+}
+
+
+tasks.register("demoqa_test", Test) {
+    useJUnitPlatform {
+        includeTags("demoqa")
+    }
 }
