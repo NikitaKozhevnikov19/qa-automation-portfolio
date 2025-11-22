@@ -25,7 +25,6 @@ public class TestBase {
         ));
         Configuration.browserCapabilities = capabilities;
 
-        // AllureSelenide логирование с включением скриншотов
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
                 .screenshots(true)
                 .savePageSource(false));
