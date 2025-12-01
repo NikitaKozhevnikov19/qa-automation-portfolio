@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
 
 import java.io.File;
+import java.net.URL;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -77,9 +78,19 @@ public class RegistrationPage {
     }
 
     public RegistrationPage setPicture(String fileName) {
-        uploadPicture.uploadFile(new File("src/test/resources/images/" + fileName));
+        ClassLoader cl = getClass().getClassLoader();
+        URL resource = cl.getResource("images/" + fileName);
+
+        if (resource == null) {
+            throw new RuntimeException("Файл НЕ найден в resources/images: " + fileName);
+        }
+
+        File file = new File(resource.getPath());
+
+        uploadPicture.uploadFile(file);
         return this;
     }
+
 
     public RegistrationPage setAddress(String value) {
         currentAddress.setValue(value);
