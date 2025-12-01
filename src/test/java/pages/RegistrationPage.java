@@ -3,6 +3,8 @@ package pages;
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
@@ -75,7 +77,7 @@ public class RegistrationPage {
     }
 
     public RegistrationPage setPicture(String fileName) {
-        uploadPicture.uploadFromClasspath("images/" + fileName);
+        uploadPicture.uploadFile(new File("src/test/resources/images/" + fileName));
         return this;
     }
 
