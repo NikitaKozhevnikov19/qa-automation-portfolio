@@ -88,12 +88,14 @@ public class RegistrationPage {
     }
 
     public RegistrationPage setState(String value) {
+        removeBanners();
         stateInput.click();
         $(byText(value)).click();
         return this;
     }
 
     public RegistrationPage setCity(String value) {
+        removeBanners();
         cityInput.click();
         $(byText(value)).click();
         return this;
@@ -106,7 +108,7 @@ public class RegistrationPage {
     }
 
     public RegistrationPage submitForm() {
-        removeBanners(); // удаляем баннеры перед кликом
+        removeBanners();
         submitButton.scrollIntoView(true).shouldBe(visible).click();
         return this;
     }
