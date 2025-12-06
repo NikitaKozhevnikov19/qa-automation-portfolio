@@ -17,7 +17,7 @@ public class NaumenTests extends TestBase {
     HeaderMenuComponent menu = new HeaderMenuComponent();
 
     @Test
-    @Tag("naumen")
+    @Tag()
     void openHomePageTest() {
         step("Открыть главную страницу", () ->
                 homePage.openPage().checkMainTitle()
@@ -25,7 +25,7 @@ public class NaumenTests extends TestBase {
     }
 
     @Test
-    @Tag("naumen")
+    @Tag()
     void productsPageTest() {
         step("Открыть главную страницу", homePage::openPage);
 
@@ -39,7 +39,7 @@ public class NaumenTests extends TestBase {
     }
 
     @Test
-    @Tag("naumen")
+    @Tag()
     void companyAboutTest() {
         step("Открыть главную", homePage::openPage);
 
@@ -67,7 +67,7 @@ public class NaumenTests extends TestBase {
     }
 
     @Test
-    @Tag("naumen")
+    @Tag()
     void contactsFormTest() {
         step("Открыть главную", homePage::openPage);
 
