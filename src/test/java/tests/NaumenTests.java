@@ -20,7 +20,7 @@ public class NaumenTests extends TestBase {
     @Tag("naumen")
     void openHomePageTest() {
         step("Открыть главную страницу", () ->
-                homePage.openPage().checkMainTitle()
+                homePage.openPage().checkLogo()
         );
     }
 
