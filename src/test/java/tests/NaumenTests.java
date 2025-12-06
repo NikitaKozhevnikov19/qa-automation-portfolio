@@ -1,5 +1,7 @@
 package tests;
 
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.*;
@@ -18,6 +20,7 @@ public class NaumenTests extends TestBase {
 
     @Test
     @Tag("naumen")
+    @Severity(SeverityLevel.BLOCKER)
     void openHomePageTest() {
         step("Открыть главную страницу", () ->
                 homePage.openPage().checkLogo()
@@ -26,12 +29,13 @@ public class NaumenTests extends TestBase {
 
     @Test
     @Tag("naumen")
+    @Severity(SeverityLevel.CRITICAL)
     void productsPageTest() {
         step("Открыть главную страницу", () ->
                 homePage.openPage()
         );
 
-        step("Перейти в раздел Продукты", () ->
+        step("Перейти в раздел 'Продукты'", () ->
                 menu.openMenuItem("Продукты")
         );
 
@@ -42,12 +46,13 @@ public class NaumenTests extends TestBase {
 
     @Test
     @Tag("naumen")
+    @Severity(SeverityLevel.NORMAL)
     void companyAboutTest() {
         step("Открыть главную страницу", () ->
                 homePage.openPage()
         );
 
-        step("Перейти на страницу О компании", () ->
+        step("Перейти на страницу 'О компании'", () ->
                 companyPage.openAboutPage()
         );
 
@@ -58,16 +63,17 @@ public class NaumenTests extends TestBase {
 
     @Test
     @Tag("naumen")
+    @Severity(SeverityLevel.NORMAL)
     void careersVacanciesTest() {
         step("Открыть главную страницу", () ->
                 homePage.openPage()
         );
 
-        step("Перейти в Карьеры", () ->
+        step("Перейти в 'Карьера'", () ->
                 menu.openMenuItem("Карьера")
         );
 
-        step("Открыть вакансии и проверить их", () ->
+        step("Открыть 'вакансии' и проверить их", () ->
                 careersPage.openVacancies()
                         .checkVacanciesLoaded()
         );
@@ -75,12 +81,13 @@ public class NaumenTests extends TestBase {
 
     @Test
     @Tag("naumen")
+    @Severity(SeverityLevel.CRITICAL)
     void contactsFormNegativeTest() {
         step("Открыть главную страницу", () ->
                 homePage.openPage()
         );
 
-        step("Открыть Контакты", () ->
+        step("Открыть 'Контакты'", () ->
                 contactsPage.openContactsPage()
         );
 
