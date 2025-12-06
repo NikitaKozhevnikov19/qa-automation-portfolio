@@ -35,12 +35,12 @@ dependencies {
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.9.0')
 }
 
-tasks.register("demoqa_test", Test) {
-    description = "Запуск только тестов с тегом demoqa"
+tasks.register("naumen_test", Test) {
+    description = "Запуск только тестов с тегом naumen"
     group = "verification"
 
     useJUnitPlatform {
-        includeTags 'demoqa'
+        includeTags 'naumen'
     }
 
     testLogging {
@@ -49,3 +49,4 @@ tasks.register("demoqa_test", Test) {
     }
     systemProperties(System.getProperties())
 }
+
