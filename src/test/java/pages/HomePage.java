@@ -15,9 +15,10 @@ public class HomePage {
     }
 
     public HomePage checkMainTitle() {
-        $("h1").shouldHave(text("NAUMEN"));
+        $("a.logo").shouldHave(text("NAUMEN"));
         return this;
     }
+
 
     public HomePage closeCookiesIfPresent() {
         if ($("button.cookie-policy__accept").exists()) {
