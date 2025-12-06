@@ -85,13 +85,13 @@ public class NaumenTests extends TestBase {
         );
 
         step("Заполнить форму с некорректными данными", () -> {
-            contactsPage.setName("")
-                    .setEmail("")
-                    .setPhone("")
-                    .setCompany("")
-                    .setMessage("")
+            contactsPage.setName("Иван Иванов")
+                    .setEmail("invalid-email") // <-- некорректный email
+                    .setPhone("1234567890")
+                    .setCompany("TestCompany")
+                    .setMessage("Тестовое сообщение")
                     .selectTopic("Консультация по решению")
-                    .checkAgree(false)
+                    .checkAgree(true)
                     .checkReklama(false);
         });
 
@@ -103,4 +103,5 @@ public class NaumenTests extends TestBase {
                 contactsPage.checkValidationErrors()
         );
     }
+
 }
