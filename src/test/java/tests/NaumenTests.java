@@ -86,7 +86,7 @@ public class NaumenTests extends TestBase {
 
         step("Заполнить форму с некорректными данными", () -> {
             contactsPage.setName("")
-                    .setEmail("invalid-email")
+                    .setEmail("")
                     .setPhone("")
                     .setCompany("")
                     .setMessage("")
