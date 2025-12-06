@@ -9,12 +9,20 @@ public class HomePage {
 
     public HomePage openPage() {
         open("/");
+        closeCookiesIfPresent();
         $("[data-test='main-slider']").shouldBe(visible);
         return this;
     }
 
     public HomePage checkMainTitle() {
         $("h1").shouldHave(text("NAUMEN"));
+        return this;
+    }
+
+    public HomePage closeCookiesIfPresent() {
+        if ($("button.cookie-policy__accept").exists()) {
+            $("button.cookie-policy__accept").shouldBe(visible).click();
+        }
         return this;
     }
 }
