@@ -96,4 +96,5 @@ public class NaumenTests extends TestBase {
                 contactsPage.checkValidationErrors()
         );
     }
+}
 
