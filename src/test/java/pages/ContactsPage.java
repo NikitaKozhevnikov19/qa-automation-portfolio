@@ -2,11 +2,10 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 
-
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class ContactsPage {
 
@@ -79,8 +78,12 @@ public class ContactsPage {
     }
 
     public ContactsPage checkValidationErrors() {
-        $(".errortext").shouldHave(text("Ошибка! Введен некорректный адрес email"));
+        // Проверяем нативные браузерные сообщения для обязательных полей
+        assert nameInput.getAttribute("validationMessage").equals("Заполните это поле");
+        assert emailInput.getAttribute("validationMessage").equals("Заполните это поле");
+        assert phoneInput.getAttribute("validationMessage").equals("Заполните это поле");
         return this;
     }
+
 }
 
