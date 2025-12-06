@@ -1,6 +1,6 @@
 package pages;
 
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -14,11 +14,11 @@ public class HomePage {
         return this;
     }
 
-    public HomePage checkMainTitle() {
-        $("a.logo").shouldHave(text("NAUMEN"));
+    public HomePage checkLogo() {
+        $("a.logo").shouldBe(visible)
+                .shouldHave(attribute("href", "/"));
         return this;
     }
-
 
     public HomePage closeCookiesIfPresent() {
         if ($("button.cookie-policy__accept").exists()) {
