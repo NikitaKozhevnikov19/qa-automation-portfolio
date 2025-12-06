@@ -10,7 +10,7 @@ public class HomePage {
     public HomePage openPage() {
         open("/");
         closeCookiesIfPresent();
-        $("[data-test='main-slider']").shouldBe(visible);
+        $("a.logo").shouldBe(visible);
         return this;
     }
 
