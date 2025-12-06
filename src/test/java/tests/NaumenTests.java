@@ -27,7 +27,9 @@ public class NaumenTests extends TestBase {
     @Test
     @Tag("naumen")
     void productsPageTest() {
-        step("Открыть главную страницу", homePage::openPage);
+        step("Открыть главную страницу", () ->
+                homePage.openPage()
+        );
 
         step("Перейти в раздел Продукты", () ->
                 menu.openMenuItem("Продукты")
@@ -41,7 +43,9 @@ public class NaumenTests extends TestBase {
     @Test
     @Tag("naumen")
     void companyAboutTest() {
-        step("Открыть главную", homePage::openPage);
+        step("Открыть главную страницу", () ->
+                homePage.openPage()
+        );
 
         step("Перейти в Компания → О нас", () ->
                 menu.openSubMenu("Компания", "О нас")
@@ -55,21 +59,26 @@ public class NaumenTests extends TestBase {
     @Test
     @Tag("naumen")
     void careersVacanciesTest() {
-        step("Открыть главную", homePage::openPage);
+        step("Открыть главную страницу", () ->
+                homePage.openPage()
+        );
 
         step("Перейти в Карьеры", () ->
                 menu.openMenuItem("Карьера")
         );
 
-        step("Проверить вакансии", () ->
-                careersPage.checkVacanciesLoaded()
+        step("Открыть вакансии и проверить их", () ->
+                careersPage.openVacancies()
+                        .checkVacanciesLoaded()
         );
     }
 
     @Test
     @Tag("naumen")
     void contactsFormTest() {
-        step("Открыть главную", homePage::openPage);
+        step("Открыть главную страницу", () ->
+                homePage.openPage()
+        );
 
         step("Открыть Контакты", () ->
                 menu.openMenuItem("Контакты")
@@ -79,7 +88,7 @@ public class NaumenTests extends TestBase {
                 contactsPage.fillContactForm("Nikita", "test@test.com", "Hello!")
         );
 
-        step("Отправить", () ->
+        step("Отправить форму", () ->
                 contactsPage.submitForm()
         );
 
