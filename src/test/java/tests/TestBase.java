@@ -25,7 +25,7 @@ public class TestBase {
         }
 
         Configuration.baseUrl = "https://www.naumen.ru";
-        Configuration.pageLoadStrategy = "eager";
+        Configuration.pageLoadStrategy = "normal";
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("browserName", Configuration.browser);
