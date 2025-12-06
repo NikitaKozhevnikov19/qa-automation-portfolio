@@ -75,7 +75,7 @@ public class NaumenTests extends TestBase {
 
     @Test
     @Tag("naumen")
-    void contactsFormTest() {
+    void contactsFormNegativeTest() {
         step("Открыть главную страницу", () ->
                 homePage.openPage()
         );
@@ -84,16 +84,16 @@ public class NaumenTests extends TestBase {
                 menu.openMenuItem("Контакты")
         );
 
-        step("Заполнить форму", () ->
-                contactsPage.fillContactForm("Nikita", "test@test.com", "Hello!")
+        step("Заполнить форму с некорректными данными", () ->
+                contactsPage.fillContactForm("", "invalid-email", "")
         );
 
-        step("Отправить форму", () ->
+        step("Попытаться отправить форму", () ->
                 contactsPage.submitForm()
         );
 
-        step("Проверить валидацию/успех", () ->
-                contactsPage.checkValidation()
+        step("Проверить, что отображаются ошибки валидации", () ->
+                contactsPage.checkValidationErrors()
         );
     }
-}
+
