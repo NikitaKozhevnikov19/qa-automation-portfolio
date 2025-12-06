@@ -6,7 +6,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class ProductsPage {
 
     public ProductsPage checkProductsLoaded() {
-        $(".products-list").shouldBe(visible);
+        $(".about__products").shouldBe(visible);
         return this;
     }
 }
