@@ -10,9 +10,8 @@ import static com.codeborne.selenide.Selenide.actions;
 public class CompanyPage {
 
     private final SelenideElement companyLink = $("a[href='/company/']");
-    private final SelenideElement header = $("h1");
+    private final SelenideElement sliderHeader = $(".slider_block__item__title");
     private final SelenideElement aboutBlock = $(".about");
-
 
     public CompanyPage openAboutPage() {
         actions().moveToElement(companyLink).perform();
@@ -20,11 +19,9 @@ public class CompanyPage {
         return this;
     }
 
-
     public CompanyPage checkAboutPage() {
-        header.shouldHave(text("О компании"));
+        sliderHeader.shouldHave(text("О компании"));
         aboutBlock.shouldBe(visible);
         return this;
     }
 }
-
