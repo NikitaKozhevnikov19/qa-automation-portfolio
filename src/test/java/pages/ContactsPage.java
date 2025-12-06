@@ -78,12 +78,11 @@ public class ContactsPage {
     }
 
     public ContactsPage checkValidationErrors() {
-        // Проверяем нативные браузерные сообщения для обязательных полей
-        assert nameInput.getAttribute("validationMessage").equals("Заполните это поле");
-        assert emailInput.getAttribute("validationMessage").equals("Заполните это поле");
-        assert phoneInput.getAttribute("validationMessage").equals("Заполните это поле");
+        $(".errortext").shouldBe(visible)
+                .shouldHave(text("Ошибка! Введен некорректный адрес email"));
         return this;
     }
+
 
 }
 
