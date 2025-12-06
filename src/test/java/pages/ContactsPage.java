@@ -79,7 +79,8 @@ public class ContactsPage {
     }
 
     public ContactsPage checkValidationErrors() {
-        $$(".error").shouldHave(sizeGreaterThan(0));
+        $(".errortext").shouldHave(text("Ошибка! Введен некорректный адрес email"));
         return this;
     }
 }
+
