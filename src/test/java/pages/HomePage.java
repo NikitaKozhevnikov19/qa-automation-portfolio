@@ -15,8 +15,8 @@ public class HomePage {
     }
 
     public HomePage checkLogo() {
-        $("a.logo").shouldBe(visible)
-                .shouldHave(attribute("href", "/"));
+        $("a.logo").shouldHave(attribute("href",
+                "https://www.naumen.ru/"));
         return this;
     }
 
