@@ -47,8 +47,8 @@ public class NaumenTests extends TestBase {
                 homePage.openPage()
         );
 
-        step("Перейти в Компания → О нас", () ->
-                menu.openSubMenu("Компания", "О нас")
+        step("Перейти на страницу О компании", () ->
+                companyPage.openAboutPage()
         );
 
         step("Проверить данные о компании", () ->
@@ -81,12 +81,19 @@ public class NaumenTests extends TestBase {
         );
 
         step("Открыть Контакты", () ->
-                menu.openMenuItem("Контакты")
+                contactsPage.openContactsPage()
         );
 
-        step("Заполнить форму с некорректными данными", () ->
-                contactsPage.fillContactForm("", "invalid-email", "")
-        );
+        step("Заполнить форму с некорректными данными", () -> {
+            contactsPage.setName("")
+                    .setEmail("invalid-email")
+                    .setPhone("")
+                    .setCompany("")
+                    .setMessage("")
+                    .selectTopic("Консультация по решению")
+                    .checkAgree(false)
+                    .checkReklama(false);
+        });
 
         step("Попытаться отправить форму", () ->
                 contactsPage.submitForm()
@@ -97,4 +104,3 @@ public class NaumenTests extends TestBase {
         );
     }
 }
-
