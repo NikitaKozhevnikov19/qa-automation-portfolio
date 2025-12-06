@@ -24,7 +24,7 @@ public class TestBase {
             Configuration.remote = remoteUrl;
         }
 
-        Configuration.baseUrl = "https://demoqa.com";
+        Configuration.baseUrl = "https://www.naumen.ru";
         Configuration.pageLoadStrategy = "eager";
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
