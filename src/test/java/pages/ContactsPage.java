@@ -52,6 +52,7 @@ public class ContactsPage {
 
     public ContactsPage selectTopic(String topic) {
         topicDropdown.$(byText(topic)).click();
+        return this;
     }
 
     public ContactsPage checkAgree(boolean value) {
