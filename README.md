@@ -29,3 +29,43 @@ Naumen разрабатывает программные решения для �
 <a href="https://web.telegram.org/"><img width="6%" title="Telegram" src="media/logo/Telegram.svg"></a>
 <a href="https://www.atlassian.com/software/jira/"><img width="5%" title="Jira" src="media/logo/Jira.svg"></a>
 </p>
+
+#### Для работы с тестами в данном проекте используются: 
+* язык - <code>Java</code>;
+* фреймворк для тестирования - <code>Selenide</code>;
+* сборщик - <code>Gradle</code>; 
+* фреймворк модульного тестирования - <code>JUnit 5</code>;
+* запуск браузеров с помошью <code>Selenoid</code>;
+* джоба для удалённого запуска в - <code>Jenkins</code>;
+* отчёт в <code>Allure Report</code>;
+* отправка результатов при помощи бота в - <code>Telegram</code>;
+* интеграция с - <code>Allure TestOps</code>;
+* регистрация задач и дефектов в <code>Jira</code>.
+
+#### Содержание Allure-отчёта:
+* Шаги теста;
+* Скриншот страницы на последнем шаге;
+* Page Source;
+* Логи браузерной консоли;
+* Видео выполнения автотеста.
+
+* ## <img width="4%" style="vertical-align:middle" title="Selenoid" src="media/logo/Selenoid.svg"> Запуск автотестов
+
+## Команды для запуска из терминала
+___
+***Локальный запуск:***
+```bash  
+gradle clean naumen_test
+```
+
+***Удалённый запуск через Jenkins:***
+```bash  
+./gradlew clean naumen_test \
+  -Dbrowser=${browser} \
+  -DbrowserSize=${browserSize} \
+  -DbrowserVersion=${browserVersion} \
+  -Dremote=https://user1:1234@selenoid.autotests.cloud/wd/hub
+```
+
+
+
