@@ -67,5 +67,13 @@ gradle clean naumen_test
   -Dremote=https://user1:1234@selenoid.autotests.cloud/wd/hub
 ```
 
+## <img width="4%" style="vertical-align:middle" title="Jenkins" src="media/logo/Jenkins.svg"> Сборка в Jenkins
+[Ссылка на сборку в Jenkins](https://jenkins.autotests.cloud/job/Naumen_Automation_Tests/)
+
+Для запуска сборки необходимо перейти в раздел <code>Собрать с параметрами</code>, выбрать значение для таких параметров как: ENVIRONMENT, COMMENT, TASK, browser, browserVersion, browserSize. Далее нажать кнопку <code>Собрать</code>.
+<p align="center">
+<img title="Jenkins Build" src="media/screens/Jenkins.png">
+</p>
+После выполнения сборки, в блоке <code>История сборок</code> напротив номера сборки появятся значки <code>Allure Report</code> и <code>Allure TestOps</code>, при клике на которые откроется страница с сформированным html-отчетом и тестовой документацией соответственно.
 
 
