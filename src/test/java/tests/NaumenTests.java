@@ -28,7 +28,7 @@ public class NaumenTests extends TestBase {
     @Severity(SeverityLevel.CRITICAL)
     void productsPageTest() {
         homePage.openPage();
-        menu.openMenuItem("Продукты");
+        menu.openMain("Продукты");
         productsPage.checkProductsLoaded();
     }
 
@@ -36,7 +36,7 @@ public class NaumenTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     void companyAboutTest() {
         homePage.openPage();
-        menu.openSubMenu("Компания", "О нас");
+        menu.openSubMenu("О нас", "О компании");
         companyPage.checkHeaderContains("О компании")
                 .checkAboutBlockVisible();
     }
@@ -45,7 +45,7 @@ public class NaumenTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     void careersVacanciesTest() {
         homePage.openPage();
-        menu.openMenuItem("Карьера");
+        menu.openMain("Карьера");
         careersPage.openVacancies()
                 .checkVacanciesLoaded();
     }
