@@ -1,26 +1,24 @@
 package pages;
 
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Condition;
+import io.qameta.allure.Step;
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class CareersPage {
 
+    @Step("Открыть список вакансий")
     public CareersPage openVacancies() {
-        // Нажимаем на ссылку "Вакансии"
-        $$("a.link").findBy(text("Вакансии")).click();
+        $$("a.link").findBy(Condition.text("Вакансии")).click();
         return this;
     }
 
+    @Step("Проверить, что вакансии загрузились")
     public CareersPage checkVacanciesLoaded() {
-        // Ждём контейнер блока вакансий
-        $(".vcnc-container-fluid").shouldBe(visible);
-        // Ждём видимости хотя бы первой вакансии
-        $$(".vcnc-item").first().shouldBe(visible);
-        // Проверяем, что есть хотя бы одна вакансия
-        $$(".vcnc-item").shouldHave(sizeGreaterThan(0));
+        $(".vcnc-container-fluid").shouldBe(Condition.visible);
+        $$(".vcnc-item").shouldHave(CollectionCondition.sizeGreaterThan(0));
         return this;
     }
 }

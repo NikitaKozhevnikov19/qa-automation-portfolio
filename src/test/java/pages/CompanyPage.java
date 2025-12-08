@@ -1,27 +1,21 @@
 package pages;
 
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.Condition;
+import io.qameta.allure.Step;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.actions;
 
 public class CompanyPage {
 
-    private final SelenideElement companyLink = $("a[href='/company/']");
-    private final SelenideElement sliderHeader = $(".slider_block__item__title");
-    private final SelenideElement aboutBlock = $(".about");
-
-    public CompanyPage openAboutPage() {
-        actions().moveToElement(companyLink).perform();
-        companyLink.shouldBe(visible).click();
+    @Step("Проверить, что заголовок содержит текст: {expected}")
+    public CompanyPage checkHeaderContains(String expected) {
+        $(".slider_block__item__title").shouldHave(Condition.text(expected));
         return this;
     }
 
-    public CompanyPage checkAboutPage() {
-        sliderHeader.shouldHave(text("О компании"));
-        aboutBlock.shouldBe(visible);
+    @Step("Проверить, что блок 'О компании' отображается")
+    public CompanyPage checkAboutBlockVisible() {
+        $(".about").shouldBe(Condition.visible);
         return this;
     }
 }
