@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import pages.*;
 import pages.components.HeaderMenuComponent;
 
-import static io.qameta.allure.Allure.step;
-
+@Tag("naumen")
 public class NaumenTests extends TestBase {
 
     HomePage homePage = new HomePage();
@@ -19,96 +18,52 @@ public class NaumenTests extends TestBase {
     HeaderMenuComponent menu = new HeaderMenuComponent();
 
     @Test
-    @Tag("naumen")
     @Severity(SeverityLevel.BLOCKER)
     void openHomePageTest() {
-        step("Открыть главную страницу", () ->
-                homePage.openPage().checkLogo()
-        );
+        homePage.openPage()
+                .checkLogo("https://www.naumen.ru/");
     }
 
     @Test
-    @Tag("naumen")
     @Severity(SeverityLevel.CRITICAL)
     void productsPageTest() {
-        step("Открыть главную страницу", () ->
-                homePage.openPage()
-        );
-
-        step("Перейти в раздел 'Продукты'", () ->
-                menu.openMenuItem("Продукты")
-        );
-
-        step("Проверить, что продукты загрузились", () ->
-                productsPage.checkProductsLoaded()
-        );
+        homePage.openPage();
+        menu.openMenuItem("Продукты");
+        productsPage.checkProductsLoaded();
     }
 
     @Test
-    @Tag("naumen")
     @Severity(SeverityLevel.NORMAL)
     void companyAboutTest() {
-        step("Открыть главную страницу", () ->
-                homePage.openPage()
-        );
-
-        step("Перейти на страницу 'О компании'", () ->
-                companyPage.openAboutPage()
-        );
-
-        step("Проверить данные о компании", () ->
-                companyPage.checkAboutPage()
-        );
+        homePage.openPage();
+        menu.openSubMenu("Компания", "О нас");
+        companyPage.checkHeaderContains("О компании")
+                .checkAboutBlockVisible();
     }
 
     @Test
-    @Tag("naumen")
     @Severity(SeverityLevel.NORMAL)
     void careersVacanciesTest() {
-        step("Открыть главную страницу", () ->
-                homePage.openPage()
-        );
-
-        step("Перейти в 'Карьера'", () ->
-                menu.openMenuItem("Карьера")
-        );
-
-        step("Открыть 'вакансии' и проверить их", () ->
-                careersPage.openVacancies()
-                        .checkVacanciesLoaded()
-        );
+        homePage.openPage();
+        menu.openMenuItem("Карьера");
+        careersPage.openVacancies()
+                .checkVacanciesLoaded();
     }
 
     @Test
-    @Tag("naumen")
     @Severity(SeverityLevel.CRITICAL)
     void contactsFormNegativeTest() {
-        step("Открыть главную страницу", () ->
-                homePage.openPage()
-        );
+        homePage.openPage();
 
-        step("Открыть 'Контакты'", () ->
-                contactsPage.openContactsPage()
-        );
-
-        step("Заполнить форму с некорректными данными", () -> {
-            contactsPage.setName("Иван Иванов")
-                    .setEmail("invalid-email") // <-- некорректный email
-                    .setPhone("1234567890")
-                    .setCompany("TestCompany")
-                    .setMessage("Тестовое сообщение")
-                    .selectTopic("Консультация по решению")
-                    .checkAgree(true)
-                    .checkReklama(false);
-        });
-
-        step("Попытаться отправить форму", () ->
-                contactsPage.submitForm()
-        );
-
-        step("Проверить, что отображаются ошибки валидации", () ->
-                contactsPage.checkValidationErrors()
-        );
+        contactsPage.openContactsPage()
+                .setName("Иван Иванов")
+                .setEmail("invalid-email")
+                .setPhone("1234567890")
+                .setCompany("TestCompany")
+                .setMessage("Тестовое сообщение")
+                .selectTopic("Консультация по решению")
+                .agreeToTerms()
+                .submit()
+                .checkError("Ошибка! Введен некорректный адрес email");
     }
-
 }
