@@ -4,20 +4,17 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
-import java.time.Duration;
-
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.actions;
 
 public class HeaderMenuComponent {
 
     private SelenideElement mainMenu(String href) {
-        return $("header a[href='" + href + "']");
+        return $(String.format("header a[href='%s']", href));
     }
 
     private SelenideElement subMenu(String href) {
-        return $("header li.opened").$$("a")
-                .findBy(Condition.attribute("href", href));
+        return $(String.format("header a[href='%s']", href));
     }
 
     private String getMainHref(String name) {
@@ -34,34 +31,27 @@ public class HeaderMenuComponent {
     private String getSubHref(String name) {
         return switch (name) {
             case "О компании" -> "/company/";
-            case "Контакты" -> "/company/contacts/";
             case "История" -> "/company/history/";
             case "Команда" -> "/company/team/";
-            default -> throw new IllegalArgumentException("Неизвестный подпункт меню: " + name);
+            default -> throw new IllegalArgumentException("Неизвестный подпункт: " + name);
         };
     }
 
-    @Step("Навести курсор на верхний пункт меню '{main}'")
-    public HeaderMenuComponent hoverMainMenu(String main) {
-        String href = getMainHref(main);
-        actions().moveToElement(mainMenu(href)).perform();
-        return this;
+    @Step("Открыть пункт верхнего меню '{main}'")
+    public void openMainMenu(String main) {
+        String mainHref = getMainHref(main);
+        mainMenu(mainHref)
+                .shouldBe(Condition.visible)
+                .click();
     }
 
-    @Step("Открыть верхний пункт меню '{main}'")
-    public void openMain(String main) {
-        String href = getMainHref(main);
-        mainMenu(href).shouldBe(Condition.visible).click();
-    }
-
-    @Step("Открыть подпункт меню '{sub}' из верхнего пункта '{main}'")
+    @Step("Навести на пункт верхнего меню '{main}' и открыть подпункт '{sub}'")
     public void openSubMenu(String main, String sub) {
-        hoverMainMenu(main);
-        $("header").$$("li").findBy(Condition.cssClass("opened"))
-                .shouldBe(Condition.visible, Duration.ofSeconds(5))
-                .$$("a")
-                .findBy(Condition.text(sub))
-                .shouldBe(Condition.visible, Duration.ofSeconds(5))
+        String mainHref = getMainHref(main);
+        String subHref = getSubHref(sub);
+        actions().moveToElement(mainMenu(mainHref)).perform();
+        subMenu(subHref)
+                .shouldBe(Condition.visible)
                 .click();
     }
 }
