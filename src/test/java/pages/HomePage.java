@@ -24,9 +24,9 @@ public class HomePage {
         return this;
     }
 
-    @Step("Проверить, что логотип ведёт на URL: {expectedHref}")
-    public HomePage checkLogo(String expectedHref) {
-        $("a.logo").shouldHave(Condition.attribute("href", expectedHref));
+    @Step("Проверить, что домашняя страница открылась")
+    public HomePage checkHomePageIsOpened() {
+        $("a.logo").shouldHave(Condition.attribute("href", "https://www.naumen.ru/"));
         return this;
     }
 }
