@@ -21,40 +21,40 @@ public class NaumenTests extends TestBase {
     @Severity(SeverityLevel.BLOCKER)
     void openHomePageTest() {
         homePage.openPage()
+                .closeCookiesIfPresent()
                 .checkHomePageIsOpened();
     }
+
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     void productsPageTest() {
-        homePage.openPage();
-        menu.openMain("Продукты");
+        homePage.openPage().closeCookiesIfPresent();
+        menu.openMainMenu("Продукты");
         productsPage.checkProductsLoaded();
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     void companyAboutTest() {
-        homePage.openPage();
+        homePage.openPage().closeCookiesIfPresent();
         menu.openSubMenu("О нас", "О компании");
-        companyPage.checkHeaderContains("О компании")
-                .checkAboutBlockVisible();
+        companyPage.checkSliderHeader("О компании")
+                .checkBlockVisible(companyPage.getAboutBlock(), "О компании");
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     void careersVacanciesTest() {
-        homePage.openPage();
-        menu.openMain("Карьера");
-        careersPage.openVacancies()
-                .checkVacanciesLoaded();
+        homePage.openPage().closeCookiesIfPresent();
+        menu.openMainMenu("Карьера");
+        careersPage.openVacancies().checkVacanciesLoaded();
     }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     void contactsFormNegativeTest() {
-        homePage.openPage();
-
+        homePage.openPage().closeCookiesIfPresent();
         contactsPage.openContactsPage()
                 .setName("Иван Иванов")
                 .setEmail("invalid-email")
@@ -62,8 +62,9 @@ public class NaumenTests extends TestBase {
                 .setCompany("TestCompany")
                 .setMessage("Тестовое сообщение")
                 .selectTopic("Консультация по решению")
-                .agreeToTerms()
-                .submit()
-                .checkError("Ошибка! Введен некорректный адрес email");
+                .checkAgree(true)
+                .checkReklama(false)
+                .submitForm()
+                .checkValidationErrors("Ошибка! Введен некорректный адрес email");
     }
 }
