@@ -72,8 +72,56 @@ gradle clean naumen_test
 
 Для запуска сборки необходимо перейти в раздел <code>Собрать с параметрами</code>, выбрать значение для таких параметров как: ENVIRONMENT, COMMENT, TASK, browser, browserVersion, browserSize. Далее нажать кнопку <code>Собрать</code>.
 <p align="center">
-<img title="Jenkins Build" src="media/screens/Jenkins.png">
+<img title="Jenkins Build" src="media/screens/jenkins.png">
 </p>
 После выполнения сборки, в блоке <code>История сборок</code> напротив номера сборки появятся значки <code>Allure Report</code> и <code>Allure TestOps</code>, при клике на которые откроется страница с сформированным html-отчетом и тестовой документацией соответственно.
 
+## <img width="4%" style="vertical-align:middle" title="Allure Report" src="media/logo/Allure_Report.svg"> Пример Allure отчета
+### Overview
 
+[Ссылка на Allure отчёт](https://jenkins.autotests.cloud/job/Naumen_Automation_Tests/29/allure/)
+
+<p align="center">
+<img title="Allure Report" src="media/screens/allure.png">
+</p>
+
+## <img width="4%" style="vertical-align:middle" title="Allure TestOps" src="media/logo/AllureTestOps.svg"> Интеграция с Allure TestOps
+
+[Ссылка на проект в Allure TestOps](https://allure.autotests.cloud/project/5037/dashboards)
+
+На *Dashboard* в <code>Allure TestOps</code> видна статистика по тестам: сколько ручных и автоматизированных тестов, результаты прогона при каждом запуске сборки.
+
+<p align="center">
+<img title="Allure TestOps DashBoard" src="media/screens/allure testops.png">
+</p>
+
+### Результат выполнения автотеста
+
+<p align="center">
+<img title="Test Results in Alure TestOps" src="media/screens/allure testops 2.png">
+</p>
+
+## <img width="4%" style="vertical-align:middle" title="Jira" src="media/logo/Jira.svg"> Интеграция с Jira
+
+[Ссылка на задачу в Jira](https://jira.autotests.cloud/browse/HOMEWORK-1556)
+
+Реализована интеграция <code>Allure TestOps</code> с <code>Jira</code>, в тикете отображается, какие тест-кейсы были связаны с задачей и результат их прогона.
+
+<p align="center">
+<img title="Jira Task" src="media/screens/jira.png">
+</p>
+
+a id="telegram"></a>
+### <img width="4%" style="vertical-align:middle" title="Telegram" src="media/logo/Telegram.svg"> Уведомления в Telegram с использованием бота
+
+После завершения сборки специальный бот, созданный в <code>Telegram</code>, автоматически обрабатывает и отправляет сообщение с отчетом о прогоне тестов.
+
+<img width="70%" title="Telegram Notifications" src="media/screens/tg.png">
+</p>
+
+### <img width="4%" style="vertical-align:middle" title="Selenoid" src="media/logo/Selenoid.svg"> Видео примера запуска тестов в Selenoid
+
+В отчетах Allure для каждого теста прикреплен не только скриншот, но и видео прохождения теста
+<p align="center">
+  <img title="Selenoid Video" src="media/video/video.gif">
+</p>
