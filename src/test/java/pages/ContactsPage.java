@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -8,64 +9,85 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class ContactsPage {
 
-    @Step("Открыть страницу 'Контакты'")
+    private final SelenideElement nameInput = $("input[placeholder='Фамилия, Имя']");
+    private final SelenideElement emailInput = $("input[placeholder='E-mail']");
+    private final SelenideElement phoneInput = $("input[data-name='phone']");
+    private final SelenideElement companyNameInput = $("input[placeholder='Название компании']");
+    private final SelenideElement messageInput = $("textarea[placeholder='Ваш вопрос']");
+    private final SelenideElement topicDropdown = $(".dropdown-box");
+    private final SelenideElement agreeCheckbox = $("#form_checkbox_agree_59_6238");
+    private final SelenideElement reklamaCheckbox = $("#form_checkbox_reklama_agree_59_6239");
+    private final SelenideElement submitButton = $("input[type='submit'][value='Отправить']");
+    private final SelenideElement successMessage = $(".form-success");
+    private final SelenideElement errorText = $(".errortext");
+
+    @Step("Открыть страницу контактов")
     public ContactsPage openContactsPage() {
         open("/company/contacts/");
         return this;
     }
 
-    @Step("Ввести имя: {value}")
-    public ContactsPage setName(String value) {
-        $("input[placeholder='Фамилия, Имя']").setValue(value);
+    @Step("Заполнить поле '{field}' значением '{value}'")
+    public ContactsPage setName(String name) {
+        nameInput.setValue(name);
         return this;
     }
 
-    @Step("Ввести email: {value}")
-    public ContactsPage setEmail(String value) {
-        $("input[placeholder='E-mail']").setValue(value);
+    public ContactsPage setEmail(String email) {
+        emailInput.setValue(email);
         return this;
     }
 
-    @Step("Ввести телефон: {value}")
-    public ContactsPage setPhone(String value) {
-        $("input[data-name='phone']").setValue(value);
+    public ContactsPage setPhone(String phone) {
+        phoneInput.setValue(phone);
         return this;
     }
 
-    @Step("Ввести название компании: {value}")
-    public ContactsPage setCompany(String value) {
-        $("input[placeholder='Название компании']").setValue(value);
+    public ContactsPage setCompany(String company) {
+        companyNameInput.setValue(company);
         return this;
     }
 
-    @Step("Ввести сообщение: {value}")
-    public ContactsPage setMessage(String value) {
-        $("textarea[placeholder='Ваш вопрос']").setValue(value);
+    public ContactsPage setMessage(String message) {
+        messageInput.setValue(message);
         return this;
     }
 
-    @Step("Выбрать тему сообщения: {topic}")
+    @Step("Выбрать тему: {topic}")
     public ContactsPage selectTopic(String topic) {
         $(".dropdown-header").click();
-        $(".dropdown-box a").shouldHave(Condition.text(topic)).click();
+        topicDropdown.$$("a").findBy(Condition.text(topic)).click();
         return this;
     }
 
-    @Step("Отметить согласие на обработку данных")
-    public ContactsPage agreeToTerms() {
-        $("#form_checkbox_agree_59_6238").setSelected(true);
+    @Step("Поставить чекбокс 'Согласие' в значение {value}")
+    public ContactsPage checkAgree(boolean value) {
+        if (value) agreeCheckbox.setSelected(true);
+        return this;
+    }
+
+    @Step("Поставить чекбокс 'Реклама' в значение {value}")
+    public ContactsPage checkReklama(boolean value) {
+        if (value) reklamaCheckbox.setSelected(true);
         return this;
     }
 
     @Step("Отправить форму")
-    public ContactsPage submit() {
-        $("input[type='submit'][value='Отправить']").click();
+    public ContactsPage submitForm() {
+        submitButton.click();
         return this;
     }
 
-    @Step("Проверить отображение ошибки: {expectedText}")
-    public ContactsPage checkError(String expectedText) {
-        $(".errortext").shouldBe(Condition.visible).shouldHave(Condition.text(expectedText));
+    @Step("Проверить успешную отправку")
+    public ContactsPage checkValidation() {
+        successMessage.shouldBe(Condition.visible);
+        return this;
+    }
+
+    @Step("Проверить отображение ошибки: {expectedError}")
+    public ContactsPage checkValidationErrors(String expectedError) {
+        errorText.shouldBe(Condition.visible)
+                .shouldHave(Condition.text(expectedError));
         return this;
     }
 }
