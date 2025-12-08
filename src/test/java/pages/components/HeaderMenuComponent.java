@@ -4,17 +4,20 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.actions;
 
 public class HeaderMenuComponent {
 
     private SelenideElement mainMenu(String href) {
-        return $(String.format("header a[href='%s']", href));
+        return $("header a[href='" + href + "']");
     }
 
     private SelenideElement subMenu(String href) {
-        return $(String.format("header a[href='%s']", href));
+        return $("header li.opened").$$("a")
+                .findBy(Condition.attribute("href", href));
     }
 
     private String getMainHref(String name) {
@@ -30,7 +33,7 @@ public class HeaderMenuComponent {
 
     private String getSubHref(String name) {
         return switch (name) {
-            case "О компании" -> "/company/about/";
+            case "О компании" -> "/company/";
             case "Контакты" -> "/company/contacts/";
             case "История" -> "/company/history/";
             case "Команда" -> "/company/team/";
@@ -55,6 +58,8 @@ public class HeaderMenuComponent {
     public void openSubMenu(String main, String sub) {
         hoverMainMenu(main);
         String subHref = getSubHref(sub);
-        subMenu(subHref).shouldBe(Condition.visible).click();
+        subMenu(subHref)
+                .shouldBe(Condition.visible, Duration.ofSeconds(5))
+                .click();
     }
 }
