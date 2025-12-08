@@ -57,8 +57,10 @@ public class HeaderMenuComponent {
     @Step("Открыть подпункт меню '{sub}' из верхнего пункта '{main}'")
     public void openSubMenu(String main, String sub) {
         hoverMainMenu(main);
-        String subHref = getSubHref(sub);
-        subMenu(subHref)
+        $("header").$$("li").findBy(Condition.cssClass("opened"))
+                .shouldBe(Condition.visible, Duration.ofSeconds(5))
+                .$$("a")
+                .findBy(Condition.text(sub))
                 .shouldBe(Condition.visible, Duration.ofSeconds(5))
                 .click();
     }
