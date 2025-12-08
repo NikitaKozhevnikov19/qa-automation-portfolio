@@ -1,40 +1,60 @@
 package pages.components;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.actions;
 
 public class HeaderMenuComponent {
 
-    private final String selector = "header a[href='%s']";
-
-    @Step("Открыть пункт меню '{name}'")
-    public void openMenuItem(String name) {
-
-        String href = switch (name) {
-            case "Продукты" -> "/products/";
-            case "Компания" -> "/company/";
-            case "Карьера" -> "/career/";
-            case "Контакты" -> "/company/contacts/";
-            default -> throw new IllegalArgumentException("Неизвестный пункт меню: " + name);
-        };
-
-        $(String.format(selector, href)).shouldBe(Condition.visible).click();
+    private SelenideElement mainMenu(String href) {
+        return $(String.format("header a[href='%s']", href));
     }
 
-    @Step("Открыть подпункт '{sub}' в меню '{main}'")
-    public void openSubMenu(String main, String sub) {
+    private SelenideElement subMenu(String href) {
+        return $(String.format("header a[href='%s']", href));
+    }
 
-        openMenuItem(main);
-
-        String href = switch (sub) {
-            case "О нас" -> "/company/about/";
-            case "Наша история" -> "/company/history/";
-            case "Команда" -> "/company/team/";
-            default -> throw new IllegalArgumentException("Неизвестный подпункт: " + sub);
+    private String getMainHref(String name) {
+        return switch (name) {
+            case "О нас" -> "/company/";
+            case "Продукты" -> "/products/";
+            case "Карьера" -> "/career/";
+            case "Новости" -> "/company/news/";
+            case "Контакты" -> "/company/contacts/";
+            default -> throw new IllegalArgumentException("Неизвестный пункт верхнего меню: " + name);
         };
+    }
 
-        $(String.format(selector, href)).shouldBe(Condition.visible).click();
+    private String getSubHref(String name) {
+        return switch (name) {
+            case "О компании" -> "/company/about/";
+            case "Контакты" -> "/company/contacts/";
+            case "История" -> "/company/history/";
+            case "Команда" -> "/company/team/";
+            default -> throw new IllegalArgumentException("Неизвестный подпункт меню: " + name);
+        };
+    }
+
+    @Step("Навести курсор на верхний пункт меню '{main}'")
+    public HeaderMenuComponent hoverMainMenu(String main) {
+        String href = getMainHref(main);
+        actions().moveToElement(mainMenu(href)).perform();
+        return this;
+    }
+
+    @Step("Открыть верхний пункт меню '{main}'")
+    public void openMain(String main) {
+        String href = getMainHref(main);
+        mainMenu(href).shouldBe(Condition.visible).click();
+    }
+
+    @Step("Открыть подпункт меню '{sub}' из верхнего пункта '{main}'")
+    public void openSubMenu(String main, String sub) {
+        hoverMainMenu(main);
+        String subHref = getSubHref(sub);
+        subMenu(subHref).shouldBe(Condition.visible).click();
     }
 }
