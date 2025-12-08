@@ -21,7 +21,7 @@ public class NaumenTests extends TestBase {
     @Severity(SeverityLevel.BLOCKER)
     void openHomePageTest() {
         homePage.openPage()
-                .checkLogo("https://www.naumen.ru/");
+                .checkHomePageIsOpened();
     }
 
     @Test
