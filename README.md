@@ -111,7 +111,7 @@ gradle clean naumen_test
 <img title="Jira Task" src="media/screens/jira.png">
 </p>
 
-a id="telegram"></a>
+
 ### <img width="4%" style="vertical-align:middle" title="Telegram" src="media/logo/Telegram.svg"> Уведомления в Telegram с использованием бота
 
 После завершения сборки специальный бот, созданный в <code>Telegram</code>, автоматически обрабатывает и отправляет сообщение с отчетом о прогоне тестов.
