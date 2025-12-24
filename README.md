@@ -55,16 +55,20 @@ Naumen разрабатывает программные решения для �
 ___
 ***Локальный запуск:***
 ```bash  
-gradle clean naumen_test
+./gradlew clean naumen_test -Denv=local
 ```
-
-***Удалённый запуск через Jenkins:***
+***Удаленный запуск:***
+```bash  
+./gradlew clean naumen_test -Denv=remote
+```
+## Удалённый запуск через Jenkins
 ```bash  
 ./gradlew clean naumen_test \
-  -Dbrowser=${browser} \
-  -DbrowserSize=${browserSize} \
-  -DbrowserVersion=${browserVersion} \
-  -Dremote=https://user1:1234@selenoid.autotests.cloud/wd/hub
+  -Denv=remote \
+  -Dbrowser.name=${browser} \
+  -Dbrowser.version=${browserVersion} \
+  -Dbrowser.size=${browserSize}
+
 ```
 
 ## <img width="4%" style="vertical-align:middle" title="Jenkins" src="media/logo/Jenkins.svg"> Сборка в Jenkins
