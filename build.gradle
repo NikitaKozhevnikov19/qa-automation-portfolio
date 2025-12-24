@@ -6,6 +6,11 @@ plugins {
 group = 'kozherka.ru'
 version = '1.0-SNAPSHOT'
 
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
 allure {
     report {
         version.set("2.19.0")
@@ -27,13 +32,22 @@ repositories {
 dependencies {
     testImplementation(
             'org.junit.jupiter:junit-jupiter-api:5.9.0',
-            'com.codeborne:selenide:6.19.1',
+            'com.codeborne:selenide:7.2.3',
+            "org.aeonbits.owner:owner:1.0.12",
             'io.qameta.allure:allure-selenide:2.19.0',
-            'org.aspectj:aspectjweaver:1.9.20'
+            'org.aspectj:aspectjweaver:1.9.20',
+            'org.slf4j:slf4j-simple:2.0.12'
     )
 
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.9.0')
 }
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+    systemProperties(System.getProperties())
+    systemProperty "file.encoding", "UTF-8"
+}
+
 
 tasks.register("naumen_test", Test) {
     description = "Запуск только тестов с тегом naumen"
@@ -47,6 +61,5 @@ tasks.register("naumen_test", Test) {
         events "started", "skipped", "failed", "standard_out", "standard_error"
         exceptionFormat "short"
     }
-    systemProperties(System.getProperties())
 }
 
