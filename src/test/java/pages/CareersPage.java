@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
+
 public class CareersPage {
 
     @Step("Открыть список вакансий")
