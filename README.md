@@ -12,6 +12,7 @@ Naumen разрабатывает программные решения для �
 - [Интеграция с Jira](#-интеграция-с-jira)
 - [Уведомления в Telegram](#-уведомления-в-telegram)
 - [Видео примера запуска тестов в Selenoid](#-видео-примера-запуска-теста-в-selenoid)
+- [Безопасность](#-безопасность)
 
 - ## :computer: Используемый стек
 
@@ -55,16 +56,20 @@ Naumen разрабатывает программные решения для �
 ___
 ***Локальный запуск:***
 ```bash  
-gradle clean naumen_test
+./gradlew clean naumen_test -Denv=local
 ```
-
-***Удалённый запуск через Jenkins:***
+***Удаленный запуск:***
+```bash  
+./gradlew clean naumen_test -Denv=remote
+```
+## Удалённый запуск через Jenkins
 ```bash  
 ./gradlew clean naumen_test \
-  -Dbrowser=${browser} \
-  -DbrowserSize=${browserSize} \
-  -DbrowserVersion=${browserVersion} \
-  -Dremote=https://user1:1234@selenoid.autotests.cloud/wd/hub
+  -Denv=remote \
+  -Dbrowser.name=${browser} \
+  -Dbrowser.version=${browserVersion} \
+  -Dbrowser.size=${browserSize}
+
 ```
 
 ## <img width="4%" style="vertical-align:middle" title="Jenkins" src="media/logo/Jenkins.svg"> Сборка в Jenkins
@@ -125,3 +130,9 @@ gradle clean naumen_test
 <p align="center">
   <img title="Selenoid Video" src="media/video/video.gif">
 </p>
+
+## Безопасность
+
+В данном проекте учетные данные для подключения к Selenoid (remote.url) намеренно оставлены в файле remote.properties. Это сделано для обеспечения воспроизводимости тестов проверяющим без необходимости предварительной настройки переменных окружения.
+
+В промышленной разработке такие секреты исключаются из репозитория через .gitignore, хранятся в защищенном хранилище Jenkins и передаются в проект через системные переменные непосредственно в момент запуска тестов.
