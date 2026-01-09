@@ -18,14 +18,13 @@ public class TestBase {
 
     @BeforeAll
     static void onSettings() {
-        String env = System.getProperty("env", "local");
-        System.setProperty("env", env);
         WebConfig config = ConfigFactory.create(WebConfig.class, System.getProperties());
         Configuration.browser = config.browserName();
         Configuration.browserVersion = config.browserVersion();
         Configuration.baseUrl = "https://www.naumen.ru";
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
+
 
 
         if (config.isRemote()) {
@@ -51,7 +50,6 @@ public class TestBase {
 
     @AfterEach
     void addAttachments() {
-        SelenideLogger.removeListener("AllureSelenide");
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
         if (!Configuration.browser.equals("firefox")) {
