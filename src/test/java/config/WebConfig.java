@@ -12,7 +12,6 @@ public interface WebConfig extends Config {
     String browserName();
 
     @Key("browser.version")
-    @DefaultValue("126.0")
     String browserVersion();
 
     @Key("remote")
