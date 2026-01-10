@@ -16,24 +16,23 @@ import java.util.Map;
 
 public class TestBase {
 
+    protected static final WebConfig config = ConfigFactory.create(WebConfig.class, System.getProperties());
+
     @BeforeAll
     static void onSettings() {
-        WebConfig config = ConfigFactory.create(WebConfig.class, System.getProperties());
         Configuration.browser = config.browserName();
         Configuration.browserVersion = config.browserVersion();
-        Configuration.baseUrl = "https://www.naumen.ru";
+        Configuration.baseUrl = "https://www.naumen.ru/";
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
 
-
-
-        if (config.isRemote()) {
+        if (config.remoteEnabled()) {
             Configuration.remote = config.remoteUrl();
 
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability("selenoid:options", Map.of(
-                    "enableVNC", config.enableVNC(),
-                    "enableVideo", config.enableVideo(),
+                    "enableVNC", config.remoteEnableVnc(),
+                    "enableVideo", config.remoteEnableVideo(),
                     "enableFileUploads", true
             ));
             Configuration.browserCapabilities = capabilities;
@@ -42,21 +41,27 @@ public class TestBase {
 
     @BeforeEach
     void addAllureListener() {
-        SelenideLogger.addListener("AllureSelenide",
+        SelenideLogger.addListener(
+                "AllureSelenide",
                 new AllureSelenide()
                         .screenshots(true)
-                        .savePageSource(false));
+                        .savePageSource(false)
+        );
     }
 
     @AfterEach
     void addAttachments() {
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
+
         if (!Configuration.browser.equals("firefox")) {
             Attach.browserConsoleLogs();
         }
-        Attach.addVideo();
+
+        if (Configuration.remote != null) {
+            Attach.addVideo();
+        }
+
         Selenide.closeWebDriver();
     }
-
 }
