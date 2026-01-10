@@ -14,17 +14,18 @@ public interface WebConfig extends Config {
     @Key("browser.version")
     String browserVersion();
 
-    @Key("remote")
-    boolean isRemote();
+    @Key("remote.enabled")
+    @DefaultValue("false")
+    boolean remoteEnabled();
 
     @Key("remote.url")
     String remoteUrl();
 
-    @Key("enableVNC")
+    @Key("remote.enable.vnc")
     @DefaultValue("true")
-    boolean enableVNC();
+    boolean remoteEnableVnc();
 
-    @Key("enableVideo")
+    @Key("remote.enable.video")
     @DefaultValue("true")
-    boolean enableVideo();
+    boolean remoteEnableVideo();
 }
