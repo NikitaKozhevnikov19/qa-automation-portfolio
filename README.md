@@ -56,15 +56,15 @@ Naumen разрабатывает программные решения для �
 ___
 ***Локальный запуск:***
 ```bash  
-./gradlew clean naumen_test -Denv=local
+./gradlew clean test -Denv=local
 ```
 ***Удаленный запуск:***
 ```bash  
-./gradlew clean naumen_test -Denv=remote
+./gradlew clean test -Denv=remote
 ```
 ## Удалённый запуск через Jenkins
 ```bash  
-./gradlew clean naumen_test \
+./gradlew clean test \
   -Denv=remote \
   -Dbrowser.name=${browser} \
   -Dbrowser.version=${browserVersion} \
