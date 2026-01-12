@@ -1,29 +1,10 @@
 plugins {
     id 'java'
-    id 'io.qameta.allure' version '2.10.0'
+    id 'io.qameta.allure' version '2.12.0' // Обновили до актуальной в 2026
 }
 
 group = 'kozherka.ru'
 version = '1.0-SNAPSHOT'
-
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
-
-allure {
-    report {
-        version.set("2.19.0")
-    }
-    adapter { // отвечает за появление папочки build/allure-results
-        aspectjWeaver.set(true) //обработка аннотации @Step
-        frameworks {
-            junit5 { //название фреймворка
-                adapterVersion.set("2.19.0") //версия интеграции фреймворка и Allure
-            }
-        }
-    }
-}
 
 repositories {
     mavenCentral()
@@ -31,35 +12,39 @@ repositories {
 
 dependencies {
     testImplementation(
-            'org.junit.jupiter:junit-jupiter-api:5.9.0',
+            'org.junit.jupiter:junit-jupiter-api:5.10.0',
             'com.codeborne:selenide:7.2.3',
-            "org.aeonbits.owner:owner:1.0.12",
-            'io.qameta.allure:allure-selenide:2.19.0',
-            'org.aspectj:aspectjweaver:1.9.20',
+            'org.aeonbits.owner:owner:1.0.12',
+            'io.qameta.allure:allure-selenide:2.25.0',
+            'org.aspectj:aspectjweaver:1.9.22',
             'org.slf4j:slf4j-simple:2.0.12'
     )
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.10.0')
+}
 
-    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.9.0')
+allure {
+    report { version.set("2.25.0") }
+    adapter {
+        aspectjWeaver.set(true)
+        frameworks {
+            junit5 { adapterVersion.set("2.25.0") }
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
 }
 
 tasks.withType(Test).configureEach {
-    useJUnitPlatform()
-    systemProperties(System.getProperties())
-    systemProperty "file.encoding", "UTF-8"
-}
-
-
-tasks.register("naumen_test", Test) {
-    description = "Запуск только тестов с тегом naumen"
-    group = "verification"
-
     useJUnitPlatform {
+
         includeTags 'naumen'
     }
 
+    systemProperties(System.getProperties())
     testLogging {
         events "started", "skipped", "failed", "standard_out", "standard_error"
         exceptionFormat "short"
     }
 }
-
